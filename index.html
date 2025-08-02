@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>使命必达网络科技有限公司 - 抖音外贸建站服务</title>
+    <title>使命必达网络科技有限公司 - AI外贸建站服务</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,42 +17,120 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* 使用 Inter 字体并设置更专业的背景 */
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            background-color: #f8f9fa; /* 一个更柔和的背景色 */
+            background-color: #f8f9fa;
+            background: radial-gradient(circle at 10% 20%, rgb(235, 240, 255) 0%, rgb(255, 255, 255) 90%);
         }
-        /* 为滚动动画准备的基础类 */
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .reveal.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
-        /* 突出显示主推套餐 */
         .featured-plan {
             transform: scale(1.05);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
         }
-        /* 为SVG图形添加一些样式 */
         .svg-shadow {
             filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
         }
+        .card-hover-effect {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        /* AI Chatbot Styles */
+        #chat-widget-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+            50% { transform: scale(1.05); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3); }
+        }
+        #chat-bubble {
+            background-color: #2563eb;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            animation: pulse 2.5s infinite ease-in-out;
+            transition: transform 0.2s ease;
+        }
+        #chat-bubble:hover {
+            animation-play-state: paused;
+            transform: scale(1.1);
+        }
+        #chat-window {
+            width: 370px;
+            height: 500px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform-origin: bottom right;
+        }
+        .hidden-chat {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+        #chat-header {
+            background: linear-gradient(to right, #3b82f6, #6366f1);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #chat-messages { flex-grow: 1; padding: 1rem; overflow-y: auto; background-color: #f9fafb; }
+        .chat-message { margin-bottom: 0.75rem; display: flex; max-width: 85%; }
+        .chat-message.user { margin-left: auto; flex-direction: row-reverse; }
+        .chat-message .content { padding: 0.75rem 1rem; border-radius: 18px; word-wrap: break-word; line-height: 1.5; }
+        .chat-message.user .content { background-color: #3b82f6; color: white; border-bottom-right-radius: 4px; }
+        .chat-message.bot .content { background-color: #ffffff; color: #374151; border: 1px solid #e5e7eb; border-bottom-left-radius: 4px; }
+        #chat-input-container { border-top: 1px solid #e5e7eb; padding: 0.75rem; background-color: #ffffff; display: flex; }
+        #chat-input { flex-grow: 1; border: 1px solid #d1d5db; border-radius: 20px; padding: 0.5rem 1rem; outline: none; transition: all 0.2s ease; }
+        #chat-input:focus { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+        #chat-send { margin-left: 0.5rem; background-color: #2563eb; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; flex-shrink: 0; transition: background-color 0.2s ease; }
+        #chat-send:hover { background-color: #1d4ed8; }
     </style>
 </head>
-<body class="bg-gradient-to-b from-gray-50 to-slate-100 text-gray-800">
+<body class="text-gray-800">
 
     <!-- 导航栏 -->
-    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-md">
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-gray-200/80">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-xl md:text-2xl font-bold text-gray-900" data-lang-key="companyName">使命必达网络科技</h1>
-            <div class="flex items-center space-x-8">
-                <nav class="hidden md:flex space-x-8">
+            <div class="flex items-center space-x-4 md:space-x-8">
+                <nav class="hidden md:flex space-x-6">
                     <a href="#solution" class="text-gray-600 hover:text-blue-600 transition duration-300" data-lang-key="navSolution">解决方案</a>
+                    <a href="#ai-feature" class="text-blue-600 hover:text-blue-700 transition duration-300 font-semibold" data-lang-key="navAiFeature">AI获客</a>
                     <a href="#cases" class="text-gray-600 hover:text-blue-600 transition duration-300" data-lang-key="navCases">成功案例</a>
                     <a href="#pricing" class="text-gray-600 hover:text-blue-600 transition duration-300" data-lang-key="navPricing">服务套餐</a>
                     <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300" data-lang-key="navContact">立即咨询</a>
@@ -70,53 +148,22 @@
         <!-- 模块一：首图/头图 - 黄金3秒 -->
         <section class="bg-white py-16 md:py-24">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight reveal" data-lang-key="heroTitle">
-                    你的外贸官网，是不是正在帮你<span class="text-red-500">“劝退”</span>客户？
+                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight reveal">
+                    <span class="gradient-text" data-lang-key="heroTitle">你的外贸官网，是不是正在帮你“劝退”客户？</span>
                 </h2>
                 <p class="text-lg md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto reveal" style="transition-delay: 100ms;" data-lang-key="heroSubtitle">
                     我们的核心目标：在30秒内让客户产生“找你做就对了”的感觉。
                 </p>
                 <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto reveal" style="transition-delay: 200ms;">
                     <!-- 改造前 SVG -->
-                    <div class="border-2 border-dashed border-red-300 p-4 rounded-xl bg-red-50">
-                        <svg viewBox="0 0 300 200" class="w-full" aria-label="改造前网站示意图">
-                            <rect x="5" y="5" width="290" height="190" rx="10" fill="#fff1f2"/>
-                            <rect x="15" y="15" width="270" height="25" rx="5" fill="#fee2e2"/>
-                            <rect x="15" y="50" width="180" height="10" rx="3" fill="#fecaca"/>
-                            <rect x="15" y="70" width="150" height="10" rx="3" fill="#fecaca"/>
-                            <rect x="15" y="100" width="100" height="60" rx="5" fill="#fee2e2"/>
-                            <rect x="125" y="100" width="160" height="10" rx="3" fill="#fecaca"/>
-                            <rect x="125" y="120" width="160" height="10" rx="3" fill="#fecaca"/>
-                            <rect x="125" y="140" width="100" height="10" rx="3" fill="#fecaca"/>
-                            <g transform="rotate(-5 150 100)">
-                                <rect x="80" y="80" width="140" height="30" fill="#ef4444" rx="15" />
-                                <text x="150" y="100" font-family="sans-serif" font-size="12" fill="white" text-anchor="middle" alignment-baseline="middle" font-weight="bold" data-lang-key="beforeTag1">询盘 = 0 ?</text>
-                            </g>
-                             <g transform="rotate(3 150 135)">
-                                <rect x="75" y="120" width="150" height="30" fill="#ef4444" rx="15" />
-                                <text x="150" y="140" font-family="sans-serif" font-size="12" fill="white" text-anchor="middle" alignment-baseline="middle" font-weight="bold" data-lang-key="beforeTag2">客户不信任 ?</text>
-                            </g>
-                        </svg>
+                    <div class="border-2 border-dashed border-red-300 p-4 rounded-xl bg-red-50/50">
+                        <svg viewBox="0 0 400 260" class="w-full" aria-label="改造前网站示意图"><defs><filter id="f1" x="-0.2" y="-0.2" width="1.4" height="1.4"><feGaussianBlur in="SourceGraphic" stdDeviation="2" /></filter></defs><rect x="5" y="5" width="390" height="250" rx="10" fill="#fee2e2"/><rect x="15" y="15" width="370" height="30" rx="5" fill="#fca5a5"/><rect x="15" y="55" width="120" height="190" rx="5" fill="#fecaca"/><rect x="145" y="55" width="240" height="80" rx="5" fill="#fecaca"/><rect x="145" y="145" width="240" height="100" rx="5" fill="#fecaca"/><text x="265" y="100" font-family="Comic Sans MS, cursive" font-size="24" fill="#b91c1c" text-anchor="middle" filter="url(#f1)">Inquiry = 0</text><path d="M 200,170 Q 265,150 330,170" stroke="#b91c1c" stroke-width="3" fill="none" stroke-dasharray="5,5"/><path d="M 180,220 C 240,250 300,190 360,220" stroke="#b91c1c" stroke-width="3" fill="none" stroke-dasharray="5,5"/></svg>
                         <h3 class="text-2xl font-bold text-red-700 mt-4" data-lang-key="beforeTitle">改造前</h3>
                     </div>
                     <!-- 改造后 SVG -->
-                    <div class="border-2 border-green-400 p-4 rounded-xl bg-green-50 shadow-2xl">
-                         <svg viewBox="0 0 300 200" class="w-full svg-shadow" aria-label="改造后网站示意图">
-                            <rect x="5" y="5" width="290" height="190" rx="10" fill="white"/>
-                            <rect x="5" y="5" width="290" height="30" rx="5" fill="#f0f9ff"/>
-                            <circle cx="20" cy="20" r="4" fill="#ef4444"/>
-                            <circle cx="35" cy="20" r="4" fill="#facc15"/>
-                            <circle cx="50" cy="20" r="4" fill="#4ade80"/>
-                            <rect x="25" y="55" width="250" height="25" rx="5" fill="#2563eb"/>
-                            <text x="150" y="70" font-family="sans-serif" font-size="12" fill="white" text-anchor="middle" alignment-baseline="middle" font-weight="bold" data-lang-key="afterTag1">提升品牌形象</text>
-                            <rect x="25" y="95" width="120" height="80" rx="5" fill="#dbeafe"/>
-                            <rect x="155" y="95" width="120" height="10" rx="3" fill="#e0e7ff"/>
-                            <rect x="155" y="115" width="120" height="10" rx="3" fill="#e0e7ff"/>
-                            <rect x="155" y="135" width="90" height="10" rx="3" fill="#e0e7ff"/>
-                            <rect x="155" y="160" width="120" height="25" rx="12.5" fill="#22c55e"/>
-                            <text x="215" y="172" font-family="sans-serif" font-size="10" fill="white" text-anchor="middle" alignment-baseline="middle" font-weight="bold" data-lang-key="afterTag2">询盘增长300%</text>
-                        </svg>
-                        <h3 class="text-2xl font-bold text-green-700 mt-4" data-lang-key="afterTitle">改造后</h3>
+                    <div class="border-2 border-transparent p-4 rounded-xl bg-white shadow-2xl">
+                         <svg viewBox="0 0 400 260" class="w-full svg-shadow" aria-label="改造后网站示意图"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:rgb(59,130,246);stop-opacity:1" /><stop offset="100%" style="stop-color:rgb(139,92,246);stop-opacity:1" /></linearGradient></defs><rect x="5" y="5" width="390" height="250" rx="15" fill="white"/><rect x="5" y="5" width="390" height="40" rx="10" fill="#f3f4f6"/><circle cx="25" cy="25" r="6" fill="#fca5a5"/><circle cx="45" cy="25" r="6" fill="#fcd34d"/><circle cx="65" cy="25" r="6" fill="#86efac"/><rect x="25" y="65" width="150" height="170" rx="10" fill="url(#grad1)"/><rect x="195" y="65" width="180" height="15" rx="5" fill="#e5e7eb"/><rect x="195" y="90" width="180" height="15" rx="5" fill="#e5e7eb"/><rect x="195" y="115" width="140" height="15" rx="5" fill="#e5e7eb"/><rect x="195" y="150" width="180" height="85" rx="10" fill="#f3f4f6"/><circle cx="220" cy="192" r="15" fill="#c7d2fe"/><path d="M 250 210 C 270 180, 310 180, 330 210" stroke="#a5b4fc" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M 280 185 L 320 185" stroke="#a5b4fc" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+                        <h3 class="text-2xl font-bold text-blue-700 mt-4" data-lang-key="afterTitle">改造后</h3>
                     </div>
                 </div>
                  <a href="#contact" class="mt-12 inline-block bg-blue-600 text-white text-xl font-bold py-4 px-10 rounded-lg hover:bg-blue-700 transition-transform hover:scale-105 duration-300 reveal" style="transition-delay: 300ms;" data-lang-key="heroButton">
@@ -125,220 +172,48 @@
             </div>
         </section>
 
-        <!-- 模块二：痛点挖掘 -->
-        <section class="py-16 md:py-24">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 reveal" data-lang-key="painTitle">你是否也遇到了这些<span class="text-blue-600">难题</span>？</h2>
-                <p class="text-lg text-gray-600 mb-12 reveal" style="transition-delay: 100ms;" data-lang-key="painSubtitle">我们懂你，更懂你的客户说不出的苦。</p>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-                    <!-- 痛点1 -->
-                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 reveal" style="transition-delay: 200ms;">
-                        <i class="fas fa-palette text-4xl text-red-500 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2" data-lang-key="pain1Title">还在用免费模板？</h3>
-                        <p class="text-gray-600" data-lang-key="pain1Text">看起来不专业，在客户那里第一印象就输了。</p>
-                    </div>
-                    <!-- 痛点2 -->
-                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 reveal" style="transition-delay: 300ms;">
-                        <i class="fas fa-mobile-screen-button text-4xl text-red-500 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2" data-lang-key="pain2Title">网站手机打开就乱码？</h3>
-                        <p class="text-gray-600" data-lang-key="pain2Text">现在一半以上的客户都用手机看网站，这等于直接放弃了半个市场。</p>
-                    </div>
-                    <!-- 痛点3 -->
-                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 reveal" style="transition-delay: 400ms;">
-                        <i class="fas fa-search-dollar text-4xl text-red-500 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2" data-lang-key="pain3Title">花钱做了网站却没流量？</h3>
-                        <p class="text-gray-600" data-lang-key="pain3Text">钱白花了，网站成了摆设，一个询盘电话都没有。</p>
-                    </div>
-                    <!-- 痛点4 -->
-                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 reveal" style="transition-delay: 500ms;">
-                        <i class="fas fa-face-angry text-4xl text-red-500 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2" data-lang-key="pain4Title">后台难用到抓狂？</h3>
-                        <p class="text-gray-600" data-lang-key="pain4Text">想自己更新产品，每次都要求人，既费时间又费钱。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 模块三：解决方案 -->
-        <section id="solution" class="bg-white py-16 md:py-24">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 reveal" data-lang-key="solutionTitle">我们的<span class="text-blue-600">解决方案</span></h2>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto reveal" style="transition-delay: 100ms;" data-lang-key="solutionSubtitle">我们不只说“做得好”，更要让你清楚“我们好在哪里”。</p>
-                </div>
-                <div class="space-y-12">
-                    <!-- 方案1 -->
-                    <div class="flex flex-col md:flex-row items-center gap-8 reveal" style="transition-delay: 200ms;">
-                        <div class="md:w-1/2 bg-slate-100 p-8 rounded-xl flex justify-center items-center">
-                            <i class="fas fa-drafting-compass text-8xl text-blue-500"></i>
-                        </div>
-                        <div class="md:w-1/2">
-                            <h3 class="text-2xl font-bold mb-3" data-lang-key="solution1Title">专业定制设计，拒绝模板</h3>
-                            <p class="text-gray-600 mb-4" data-lang-key="solution1What"><strong class="text-gray-800">做什么：</strong>根据你的公司文化、产品特色，1对1进行设计，每一个网站都是独一无二的。</p>
-                            <p class="text-gray-600" data-lang-key="solution1Why"><strong class="text-gray-800">有什么用：</strong>让你的品牌形象在众多同行中脱颖而出，给客户留下深刻、专业的印象。</p>
-                        </div>
-                    </div>
-                    <!-- 方案2 -->
-                    <div class="flex flex-col md:flex-row-reverse items-center gap-8 reveal" style="transition-delay: 300ms;">
-                        <div class="md:w-1/2 bg-slate-100 p-8 rounded-xl flex justify-center items-center">
-                            <i class="fab fa-google text-8xl text-green-500"></i>
-                        </div>
-                        <div class="md:w-1/2">
-                            <h3 class="text-2xl font-bold mb-3" data-lang-key="solution2Title">天生具备Google SEO基因</h3>
-                            <p class="text-gray-600 mb-4" data-lang-key="solution2What"><strong class="text-gray-800">做什么：</strong>网站的底层代码、网址结构、加载速度都严格按照Google的喜好来搭建。</p>
-                            <p class="text-gray-600" data-lang-key="solution2Why"><strong class="text-gray-800">有什么用：</strong>让你的网站更容易被Google收录和排名，客户搜索产品时能主动找到你，带来免费又精准的流量。</p>
-                        </div>
-                    </div>
-                    <!-- 方案3 -->
-                    <div class="flex flex-col md:flex-row items-center gap-8 reveal" style="transition-delay: 400ms;">
-                        <div class="md:w-1/2 bg-slate-100 p-8 rounded-xl flex justify-center items-center">
-                            <i class="fas fa-laugh-beam text-8xl text-yellow-500"></i>
-                        </div>
-                        <div class="md:w-1/2">
-                            <h3 class="text-2xl font-bold mb-3" data-lang-key="solution3Title">可视化后台，像发朋友圈一样简单</h3>
-                            <p class="text-gray-600 mb-4" data-lang-key="solution3What"><strong class="text-gray-800">做什么：</strong>提供一个操作非常简单的后台管理系统。</p>
-                            <p class="text-gray-600" data-lang-key="solution3Why"><strong class="text-gray-800">有什么用：</strong>你自己就能随时随地上传新产品、修改公司介绍，完全不需要懂代码，省时省心。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 模块四：案例展示 -->
-        <section id="cases" class="py-16 md:py-24">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 reveal" data-lang-key="casesTitle">事实胜于雄辩</h2>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto reveal" style="transition-delay: 100ms;" data-lang-key="casesSubtitle">建立信任最关键的一环，看看我们为他们带来了什么改变。</p>
-                </div>
-                <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-12">
-                    <!-- 案例1 -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 reveal" style="transition-delay: 200ms;">
-                        <div class="p-4 bg-slate-50">
-                            <svg viewBox="0 0 400 250" class="w-full svg-shadow rounded-lg" aria-label="案例网站截图1"><rect x="0" y="0" width="400" height="250" rx="8" fill="white"/><rect x="0" y="0" width="400" height="30" fill="#e0e7ff"/><circle cx="15" cy="15" r="5" fill="#e5e7eb"/><circle cx="30" cy="15" r="5" fill="#e5e7eb"/><circle cx="45" cy="15" r="5" fill="#e5e7eb"/><rect x="20" y="50" width="360" height="40" rx="5" fill="#4f46e5"/><rect x="20" y="100" width="150" height="120" rx="5" fill="#c7d2fe"/><rect x="180" y="100" width="200" height="15" rx="4" fill="#eef2ff"/><rect x="180" y="125" width="200" height="15" rx="4" fill="#eef2ff"/><rect x="180" y="150" width="150" height="15" rx="4" fill="#eef2ff"/><rect x="180" y="195" width="100" height="25" rx="12.5" fill="#a5b4fc"/></svg>
-                        </div>
-                        <div class="p-8">
-                            <p class="text-sm font-semibold text-blue-600" data-lang-key="case1Client">科迈斯工程机械 (Komais Machinery Co., Ltd.)</p>
-                            <h3 class="text-xl font-bold my-2" data-lang-key="caseProblemTitle">之前的问题：</h3>
-                            <p class="text-gray-600 mb-4" data-lang-key="case1ProblemText">网站基于Flash技术，谷歌零收录，移动端无法打开，导致流失大量潜在客户。</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
-                                <p class="font-semibold text-blue-800" data-lang-key="case1Quote">“新网站上线3个月，收到的有效询盘比过去3年加起来都多！谷歌排名也上来了！”</p>
-                                <p class="text-sm text-right text-blue-700 mt-2" data-lang-key="case1Person">- 市场总监, 李先生</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 案例2 -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 reveal" style="transition-delay: 300ms;">
-                        <div class="p-4 bg-slate-50">
-                           <svg viewBox="0 0 400 250" class="w-full svg-shadow rounded-lg" aria-label="案例网站截图2"><rect x="0" y="0" width="400" height="250" rx="8" fill="white"/><rect x="0" y="0" width="400" height="30" fill="#d1fae5"/><circle cx="15" cy="15" r="5" fill="#e5e7eb"/><circle cx="30" cy="15" r="5" fill="#e5e7eb"/><circle cx="45" cy="15" r="5" fill="#e5e7eb"/><rect x="20" y="50" width="360" height="40" rx="5" fill="#10b981"/><rect x="20" y="100" width="150" height="120" rx="5" fill="#a7f3d0"/><rect x="180" y="100" width="200" height="15" rx="4" fill="#d1fae5"/><rect x="180" y="125" width="200" height="15" rx="4" fill="#d1fae5"/><rect x="180" y="150" width="150" height="15" rx="4" fill="#d1fae5"/><rect x="180" y="195" width="100" height="25" rx="12.5" fill="#6ee7b7"/></svg>
-                        </div>
-                        <div class="p-8">
-                            <p class="text-sm font-semibold text-green-600" data-lang-key="case2Client">奥普莱特照明 (Oppleiter Lighting Tech)</p>
-                            <h3 class="text-xl font-bold my-2" data-lang-key="caseProblemTitle2">之前的问题：</h3>
-                            <p class="text-gray-600 mb-4" data-lang-key="case2ProblemText">模板网站设计廉价，无法体现品牌价值，产品展示混乱，海外客户信任度低。</p>
-                            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
-                                <p class="font-semibold text-green-800" data-lang-key="case2Quote">“新网站非常专业，完全体现了我们的品牌实力。现在海外客户主动联系我们，订单转化率提升了至少50%！”</p>
-                                <p class="text-sm text-right text-green-700 mt-2" data-lang-key="case2Person">- 创始人, 张女士</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 模块五：服务套餐与价格 -->
-        <section id="pricing" class="bg-white py-16 md:py-24">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 reveal" data-lang-key="pricingTitle">服务套餐与价格</h2>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto reveal" style="transition-delay: 100ms;" data-lang-key="pricingSubtitle">清晰透明，总有一款适合你。我们让您做的，是选择题，不是猜谜题。</p>
-                </div>
-                <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
-                    <!-- 套餐一：基础版 -->
-                    <div class="bg-slate-50 p-8 rounded-xl border border-gray-200 reveal" style="transition-delay: 200ms;">
-                        <h3 class="text-2xl font-bold text-center" data-lang-key="plan1Name">基础版</h3>
-                        <p class="text-center text-gray-500 mb-6" data-lang-key="plan1Desc">适合初创企业</p>
-                        <p class="text-5xl font-extrabold text-center mb-6" data-lang-key="plan1Price">¥ 5,880</p>
-                        <ul class="space-y-4 text-gray-700 mb-8">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeature1">专业定制设计</span></li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeature2">5-10个页面</span></li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeature3">移动端适配</span></li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeature4">基础SEO配置</span></li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeature5">一年技术维护</span></li>
-                        </ul>
-                        <a href="#contact" class="w-full block text-center bg-white text-blue-600 border border-blue-600 font-bold py-3 rounded-lg hover:bg-blue-50 transition duration-300" data-lang-key="planButton1">选择该套餐</a>
-                    </div>
-                    <!-- 套餐二：标准版 (主推) -->
-                    <div class="bg-blue-600 text-white p-8 rounded-xl shadow-lg relative featured-plan reveal" style="transition-delay: 300ms;">
-                         <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
-                            <span class="bg-yellow-400 text-gray-900 text-sm font-bold px-4 py-1 rounded-full uppercase" data-lang-key="plan2Badge">性价比之选</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-center" data-lang-key="plan2Name">标准版</h3>
-                        <p class="text-center text-blue-200 mb-6" data-lang-key="plan2Desc">主推！</p>
-                        <p class="text-5xl font-extrabold text-center mb-6" data-lang-key="plan2Price">¥ 9,880</p>
-                        <ul class="space-y-4 text-blue-100 mb-8">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-3"></i><strong data-lang-key="planFeatureAllBasic">基础版所有内容</strong></li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-3"></i><span data-lang-key="planFeatureBlog">博客系统</span></li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-3"></i><span data-lang-key="planFeatureSeo">3个月的SEO初步优化服务</span></li>
-                        </ul>
-                        <a href="#contact" class="w-full block text-center bg-white text-blue-600 font-bold py-3 rounded-lg hover:bg-blue-100 transition duration-300" data-lang-key="planButton2">选择该套餐</a>
-                    </div>
-                    <!-- 套餐三：尊享版 -->
-                    <div class="bg-slate-50 p-8 rounded-xl border border-gray-200 reveal" style="transition-delay: 400ms;">
-                        <h3 class="text-2xl font-bold text-center" data-lang-key="plan3Name">尊享版</h3>
-                        <p class="text-center text-gray-500 mb-6" data-lang-key="plan3Desc">适合有发展规划的企业</p>
-                        <p class="text-5xl font-extrabold text-center mb-6" data-lang-key="plan3Price">¥ 15,800</p>
-                        <ul class="space-y-4 text-gray-700 mb-8">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><strong data-lang-key="planFeatureAllStandard">标准版所有内容</strong></li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeatureMultiLang">多语言功能</span></li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeatureAdvSeo">深入SEO优化</span></li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeatureContent">内容更新指导</span></li>
-                        </ul>
-                        <a href="#contact" class="w-full block text-center bg-white text-blue-600 border border-blue-600 font-bold py-3 rounded-lg hover:bg-blue-50 transition duration-300" data-lang-key="planButton3">选择该套餐</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 模块六：“钩子”产品 -->
-        <section class="py-16 md:py-24">
-            <div class="container mx-auto px-6">
-                <div class="max-w-4xl mx-auto bg-gradient-to-br from-slate-900 to-gray-800 text-white rounded-2xl p-8 md:p-12 text-center shadow-2xl reveal">
-                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-yellow-400" data-lang-key="hookTitle">【限时特惠】官网一对一诊断与规划</h2>
-                    <p class="text-7xl font-bold my-6" data-lang-key="hookPrice">¥99<span class="text-lg font-normal ml-2">元</span></p>
-                    <p class="text-lg text-gray-300 mb-8" data-lang-key="hookSubtitle">花小钱，体验我们的专业度，为您的成功铺路。</p>
-                    <div class="grid md:grid-cols-3 gap-6 text-left mb-10">
-                        <div class="bg-gray-700/50 p-4 rounded-lg"><i class="fas fa-search-plus text-yellow-400 mr-2"></i><span data-lang-key="hookFeature1">全面分析现有网站10大问题</span></div>
-                        <div class="bg-gray-700/50 p-4 rounded-lg"><i class="fas fa-file-alt text-yellow-400 mr-2"></i><span data-lang-key="hookFeature2">提供专业《网站优化建议报告》</span></div>
-                        <div class="bg-gray-700/50 p-4 rounded-lg"><i class="fas fa-phone-alt text-yellow-400 mr-2"></i><span data-lang-key="hookFeature3">30分钟专家1对1电话咨询</span></div>
-                    </div>
-                    <a href="#contact" class="bg-yellow-400 text-gray-900 text-xl font-bold py-4 px-10 rounded-lg hover:bg-yellow-500 transition-transform hover:scale-105 duration-300 inline-block" data-lang-key="hookButton">立即抢购99元诊断服务</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- 模块七：行动号召 -->
-        <section id="contact" class="bg-blue-700 text-white py-20">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-extrabold mb-6 reveal" data-lang-key="ctaTitle">准备好迎接询盘增长了吗？</h2>
-                <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto reveal" style="transition-delay: 100ms;" data-lang-key="ctaSubtitle">
-                    给我们一个机会，我们还你一个能持续带来客户的网站。
-                </p>
-                <button id="cta-button" class="bg-white text-blue-700 font-bold text-xl py-4 px-12 rounded-full hover:bg-blue-100 transition-transform hover:scale-105 duration-300 shadow-lg reveal" style="transition-delay: 200ms;">
-                    <i class="fas fa-paper-plane mr-3"></i>
-                    <span data-lang-key="ctaButton">立即私信，免费获取为你量身定制的建站方案！</span>
-                </button>
-            </div>
-        </section>
+        <!-- 模块二：痛点挖掘 --><section class="py-16 md:py-24"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 reveal" data-lang-key="painTitle">你是否也遇到了这些<span class="gradient-text">难题</span>？</h2><p class="text-lg text-gray-600 mb-12 reveal" style="transition-delay: 100ms;" data-lang-key="painSubtitle">我们懂你，更懂你的客户说不出的苦。</p><div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"><div class="bg-white p-8 rounded-xl card-hover-effect border border-gray-200 reveal" style="transition-delay: 200ms;"><i class="fas fa-palette text-4xl text-red-500 mb-4"></i><h3 class="text-xl font-bold mb-2" data-lang-key="pain1Title">还在用免费模板？</h3><p class="text-gray-600" data-lang-key="pain1Text">看起来不专业，在客户那里第一印象就输了。</p></div><div class="bg-white p-8 rounded-xl card-hover-effect border border-gray-200 reveal" style="transition-delay: 300ms;"><i class="fas fa-mobile-screen-button text-4xl text-red-500 mb-4"></i><h3 class="text-xl font-bold mb-2" data-lang-key="pain2Title">网站手机打开就乱码？</h3><p class="text-gray-600" data-lang-key="pain2Text">现在一半以上的客户都用手机看网站，这等于直接放弃了半个市场。</p></div><div class="bg-white p-8 rounded-xl card-hover-effect border border-gray-200 reveal" style="transition-delay: 400ms;"><i class="fas fa-search-dollar text-4xl text-red-500 mb-4"></i><h3 class="text-xl font-bold mb-2" data-lang-key="pain3Title">花钱做了网站却没流量？</h3><p class="text-gray-600" data-lang-key="pain3Text">钱白花了，网站成了摆设，一个询盘电话都没有。</p></div><div class="bg-white p-8 rounded-xl card-hover-effect border border-gray-200 reveal" style="transition-delay: 500ms;"><i class="fas fa-face-angry text-4xl text-red-500 mb-4"></i><h3 class="text-xl font-bold mb-2" data-lang-key="pain4Title">后台难用到抓狂？</h3><p class="text-gray-600" data-lang-key="pain4Text">想自己更新产品，每次都要求人，既费时间又费钱。</p></div></div></div></section>
+        <!-- 模块三：解决方案 --><section id="solution" class="bg-white py-16 md:py-24"><div class="container mx-auto px-6"><div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 reveal" data-lang-key="solutionTitle">我们的<span class="gradient-text">解决方案</span></h2><p class="text-lg text-gray-600 max-w-2xl mx-auto reveal" style="transition-delay: 100ms;" data-lang-key="solutionSubtitle">我们不只说“做得好”，更要让你清楚“我们好在哪里”。</p></div><div class="space-y-12"><div class="flex flex-col md:flex-row items-center gap-12 reveal" style="transition-delay: 200ms;"><div class="md:w-1/2 bg-slate-100 p-8 rounded-xl flex justify-center items-center"><i class="fas fa-drafting-compass text-8xl text-blue-500"></i></div><div class="md:w-1/2"><h3 class="text-2xl font-bold mb-3" data-lang-key="solution1Title">专业定制设计，拒绝模板</h3><p class="text-gray-600 mb-4" data-lang-key="solution1What"><strong class="text-gray-800">做什么：</strong>根据你的公司文化、产品特色，1对1进行设计，每一个网站都是独一无二的。</p><p class="text-gray-600" data-lang-key="solution1Why"><strong class="text-gray-800">有什么用：</strong>让你的品牌形象在众多同行中脱颖而出，给客户留下深刻、专业的印象。</p></div></div><div class="flex flex-col md:flex-row-reverse items-center gap-12 reveal" style="transition-delay: 300ms;"><div class="md:w-1/2 bg-slate-100 p-8 rounded-xl flex justify-center items-center"><i class="fab fa-google text-8xl text-green-500"></i></div><div class="md:w-1/2"><h3 class="text-2xl font-bold mb-3" data-lang-key="solution2Title">天生具备Google SEO基因</h3><p class="text-gray-600 mb-4" data-lang-key="solution2What"><strong class="text-gray-800">做什么：</strong>网站的底层代码、网址结构、加载速度都严格按照Google的喜好来搭建。</p><p class="text-gray-600" data-lang-key="solution2Why"><strong class="text-gray-800">有什么用：</strong>让你的网站更容易被Google收录和排名，客户搜索产品时能主动找到你，带来免费又精准的流量。</p></div></div><div class="flex flex-col md:flex-row items-center gap-12 reveal" style="transition-delay: 400ms;"><div class="md:w-1/2 bg-slate-100 p-8 rounded-xl flex justify-center items-center"><i class="fas fa-laugh-beam text-8xl text-yellow-500"></i></div><div class="md:w-1/2"><h3 class="text-2xl font-bold mb-3" data-lang-key="solution3Title">可视化后台，像发朋友圈一样简单</h3><p class="text-gray-600 mb-4" data-lang-key="solution3What"><strong class="text-gray-800">做什么：</strong>提供一个操作非常简单的后台管理系统。</p><p class="text-gray-600" data-lang-key="solution3Why"><strong class="text-gray-800">有什么用：</strong>你自己就能随时随地上传新产品、修改公司介绍，完全不需要懂代码，省时省心。</p></div></div></div></div></section>
+        <!-- 新增模块：AI特色功能 --><section id="ai-feature" class="py-16 md:py-24"><div class="container mx-auto px-6"><div class="max-w-5xl mx-auto bg-gradient-to-r from-purple-600 to-indigo-700 text-white rounded-2xl p-8 md:p-12 shadow-2xl reveal flex flex-col md:flex-row items-center gap-8"><div class="flex-shrink-0"><i class="fas fa-robot text-7xl md:text-8xl text-yellow-300"></i></div><div><h2 class="text-3xl md:text-4xl font-extrabold mb-4" data-lang-key="aiFeatureTitle">独家特色功能：AI大模型获客引擎</h2><p class="text-lg text-indigo-200 mb-6" data-lang-key="aiFeatureDesc">您的网站将融入强大的SiliconFlow AI大模型，拥有一个7x24小时在线的AI智能客服。无需真人值守，它能自动与访客聊天，解答疑问，并引导他们下单，将流量高效转化为询盘！</p><div class="bg-indigo-800/50 inline-block p-4 rounded-lg"><p class="text-xl font-bold" data-lang-key="aiFeaturePrice">原价 <span class="line-through">¥4900</span> <span class="ml-4 bg-yellow-400 text-indigo-900 font-bold py-2 px-3 rounded">活动期间免费赠送</span></p></div></div></div></div></section>
+        <!-- 模块四：案例展示 --><section id="cases" class="py-16 md:py-24 bg-white"><div class="container mx-auto px-6"><div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 reveal" data-lang-key="casesTitle">事实胜于雄辩</h2><p class="text-lg text-gray-600 max-w-2xl mx-auto reveal" style="transition-delay: 100ms;" data-lang-key="casesSubtitle">建立信任最关键的一环，看看我们为他们带来了什么改变。</p></div><div class="grid md:grid-cols-1 lg:grid-cols-2 gap-12"><div class="bg-white rounded-xl overflow-hidden card-hover-effect border border-gray-200 reveal" style="transition-delay: 200ms;"><div class="p-4 bg-slate-50"><svg viewBox="0 0 400 250" class="w-full svg-shadow rounded-lg" aria-label="案例网站截图1"><rect x="0" y="0" width="400" height="250" rx="8" fill="white"/><rect x="0" y="0" width="400" height="30" fill="#e0e7ff"/><circle cx="15" cy="15" r="5" fill="#e5e7eb"/><circle cx="30" cy="15" r="5" fill="#e5e7eb"/><circle cx="45" cy="15" r="5" fill="#e5e7eb"/><rect x="20" y="50" width="360" height="40" rx="5" fill="#4f46e5"/><rect x="20" y="100" width="150" height="120" rx="5" fill="#c7d2fe"/><rect x="180" y="100" width="200" height="15" rx="4" fill="#eef2ff"/><rect x="180" y="125" width="200" height="15" rx="4" fill="#eef2ff"/><rect x="180" y="150" width="150" height="15" rx="4" fill="#eef2ff"/><rect x="180" y="195" width="100" height="25" rx="12.5" fill="#a5b4fc"/></svg></div><div class="p-8"><p class="text-sm font-semibold text-blue-600" data-lang-key="case1Client">科迈斯工程机械 (Komais Machinery Co., Ltd.)</p><h3 class="text-xl font-bold my-2" data-lang-key="caseProblemTitle">之前的问题：</h3><p class="text-gray-600 mb-4" data-lang-key="case1ProblemText">网站基于Flash技术，谷歌零收录，移动端无法打开，导致流失大量潜在客户。</p><div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg"><p class="font-semibold text-blue-800" data-lang-key="case1Quote">“新网站上线3个月，收到的有效询盘比过去3年加起来都多！谷歌排名也上来了！”</p><p class="text-sm text-right text-blue-700 mt-2" data-lang-key="case1Person">- 市场总监, 李先生</p></div></div></div><div class="bg-white rounded-xl overflow-hidden card-hover-effect border border-gray-200 reveal" style="transition-delay: 300ms;"><div class="p-4 bg-slate-50"><svg viewBox="0 0 400 250" class="w-full svg-shadow rounded-lg" aria-label="案例网站截图2"><rect x="0" y="0" width="400" height="250" rx="8" fill="white"/><rect x="0" y="0" width="400" height="30" fill="#d1fae5"/><circle cx="15" cy="15" r="5" fill="#e5e7eb"/><circle cx="30" cy="15" r="5" fill="#e5e7eb"/><circle cx="45" cy="15" r="5" fill="#e5e7eb"/><rect x="20" y="50" width="360" height="40" rx="5" fill="#10b981"/><rect x="20" y="100" width="150" height="120" rx="5" fill="#a7f3d0"/><rect x="180" y="100" width="200" height="15" rx="4" fill="#d1fae5"/><rect x="180" y="125" width="200" height="15" rx="4" fill="#d1fae5"/><rect x="180" y="150" width="150" height="15" rx="4" fill="#d1fae5"/><rect x="180" y="195" width="100" height="25" rx="12.5" fill="#6ee7b7"/></svg></div><div class="p-8"><p class="text-sm font-semibold text-green-600" data-lang-key="case2Client">奥普莱特照明 (Oppleiter Lighting Tech)</p<h3 class="text-xl font-bold my-2" data-lang-key="caseProblemTitle2">之前的问题：</h3><p class="text-gray-600 mb-4" data-lang-key="case2ProblemText">模板网站设计廉价，无法体现品牌价值，产品展示混乱，海外客户信任度低。</p><div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg"><p class="font-semibold text-green-800" data-lang-key="case2Quote">“新网站非常专业，完全体现了我们的品牌实力。现在海外客户主动联系我们，订单转化率提升了至少50%！”</p><p class="text-sm text-right text-green-700 mt-2" data-lang-key="case2Person">- 创始人, 张女士</p></div></div></div></div></div></section>
+        <!-- 模块五：服务套餐与价格 --><section id="pricing" class="py-16 md:py-24"><div class="container mx-auto px-6"><div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 reveal" data-lang-key="pricingTitle">服务套餐与价格</h2><p class="text-lg text-gray-600 max-w-2xl mx-auto reveal" style="transition-delay: 100ms;" data-lang-key="pricingSubtitle">清晰透明，总有一款适合你。我们让您做的，是选择题，不是猜谜题。</p></div><div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-center"><div class="bg-blue-600 text-white p-8 rounded-xl shadow-lg relative featured-plan card-hover-effect reveal" style="transition-delay: 200ms;"><div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2"><span class="bg-yellow-400 text-gray-900 text-sm font-bold px-4 py-1 rounded-full uppercase" data-lang-key="plan1Badge">性价比之选</span></div><h3 class="text-2xl font-bold text-center" data-lang-key="plan1Name">基础版</h3><p class="text-center text-blue-200 mb-6" data-lang-key="plan1Desc">主推！</p><p class="text-5xl font-extrabold text-center mb-6" data-lang-key="plan1Price">¥ 499</p><ul class="space-y-4 text-blue-100 mb-8"><li class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-3"></i><span data-lang-key="planFeature1">专业定制设计</span></li><li class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-3"></i><span data-lang-key="planFeature2">5-10个页面</span></li><li class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-3"></i><span data-lang-key="planFeature3">移动端适配</span></li><li class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-3"></i><span data-lang-key="planFeature4">基础SEO配置</span></li><li class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-3"></i><span data-lang-key="planFeature5">一年技术维护</span></li></ul><a href="#contact" class="w-full block text-center bg-white text-blue-600 font-bold py-3 rounded-lg hover:bg-blue-100 transition duration-300" data-lang-key="planButton1">选择该套餐</a></div><div class="bg-slate-50 p-8 rounded-xl border border-gray-200 card-hover-effect reveal" style="transition-delay: 300ms;"><h3 class="text-2xl font-bold text-center" data-lang-key="plan2Name">标准版</h3><p class="text-center text-gray-500 mb-6" data-lang-key="plan2Desc">适合成长型业务</p><p class="text-5xl font-extrabold text-center mb-6" data-lang-key="plan2Price">¥ 599</p><ul class="space-y-4 text-gray-700 mb-8"><li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><strong data-lang-key="planFeatureAllBasic">基础版所有内容</strong></li><li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeatureBlog">博客系统</span></li><li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeatureSeo">3个月的SEO初步优化服务</span></li></ul><a href="#contact" class="w-full block text-center bg-white text-blue-600 border border-blue-600 font-bold py-3 rounded-lg hover:bg-blue-50 transition duration-300" data-lang-key="planButton2">选择该套餐</a></div><div class="bg-slate-50 p-8 rounded-xl border border-gray-200 card-hover-effect reveal" style="transition-delay: 400ms;"><h3 class="text-2xl font-bold text-center" data-lang-key="plan3Name">尊享版</h3><p class="text-center text-gray-500 mb-6" data-lang-key="plan3Desc">适合有发展规划的企业</p><p class="text-5xl font-extrabold text-center mb-6" data-lang-key="plan3Price">¥ 2999</p><ul class="space-y-4 text-gray-700 mb-8"><li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><strong data-lang-key="planFeatureAllStandard">标准版所有内容</strong></li><li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeatureMultiLang">多语言功能</span></li><li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeatureAdvSeo">深入SEO优化</span></li><li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><span data-lang-key="planFeatureContent">内容更新指导</span></li></ul><a href="#contact" class="w-full block text-center bg-white text-blue-600 border border-blue-600 font-bold py-3 rounded-lg hover:bg-blue-50 transition duration-300" data-lang-key="planButton3">选择该套餐</a></div></div></div></section>
+        <!-- 模块六：“钩子”产品 --><section class="py-16 md:py-24"><div class="container mx-auto px-6"><div class="max-w-4xl mx-auto bg-gradient-to-br from-slate-900 to-gray-800 text-white rounded-2xl p-8 md:p-12 text-center shadow-2xl reveal"><h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-yellow-400" data-lang-key="hookTitle">【限时特惠】官网一对一诊断与规划</h2><p class="text-7xl font-bold my-6" data-lang-key="hookPrice">¥99<span class="text-lg font-normal ml-2">元</span></p><p class="text-lg text-gray-300 mb-8" data-lang-key="hookSubtitle">花小钱，体验我们的专业度，为您的成功铺路。</p><div class="grid md:grid-cols-3 gap-6 text-left mb-10"><div class="bg-gray-700/50 p-4 rounded-lg"><i class="fas fa-search-plus text-yellow-400 mr-2"></i><span data-lang-key="hookFeature1">全面分析现有网站10大问题</span></div><div class="bg-gray-700/50 p-4 rounded-lg"><i class="fas fa-file-alt text-yellow-400 mr-2"></i><span data-lang-key="hookFeature2">提供专业《网站优化建议报告》</span></div><div class="bg-gray-700/50 p-4 rounded-lg"><i class="fas fa-phone-alt text-yellow-400 mr-2"></i><span data-lang-key="hookFeature3">30分钟专家1对1电话咨询</span></div></div><a href="#contact" class="bg-yellow-400 text-gray-900 text-xl font-bold py-4 px-10 rounded-lg hover:bg-yellow-500 transition-transform hover:scale-105 duration-300 inline-block" data-lang-key="hookButton">立即抢购99元诊断服务</a></div></div></section>
+        <!-- 模块七：行动号召 --><section id="contact" class="bg-blue-700 text-white py-20"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl md:text-4xl font-extrabold mb-6 reveal" data-lang-key="ctaTitle">准备好迎接询盘增长了吗？</h2><p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto reveal" style="transition-delay: 100ms;" data-lang-key="ctaSubtitle">给我们一个机会，我们还你一个能持续带来客户的网站。</p><button id="cta-button" class="bg-white text-blue-700 font-bold text-xl py-4 px-12 rounded-full hover:bg-blue-100 transition-transform hover:scale-105 duration-300 shadow-lg reveal" style="transition-delay: 200ms;"><i class="fas fa-paper-plane mr-3"></i><span data-lang-key="ctaButton">立即私信，免费获取为你量身定制的建站方案！</span></button></div></section>
     </main>
 
     <!-- 页脚 -->
     <footer class="bg-gray-900 text-white py-8">
         <div class="container mx-auto px-6 text-center text-gray-400">
             <p data-lang-key="footerText">&copy; 2024 使命必达网络科技有限公司. All Rights Reserved.</p>
-            <p class="text-sm mt-2" data-lang-key="footerSubtitle">专业外贸建站服务商</p>
+            <p class="text-sm mt-2" data-lang-key="footerSubtitle">专业AI外贸建站服务商</p>
         </div>
     </footer>
+
+    <!-- AI Chat Widget -->
+    <div id="chat-widget-container">
+        <div id="chat-window" class="hidden-chat bg-white">
+            <div id="chat-header">
+                <div>
+                    <p class="font-bold" data-lang-key="chatHeaderTitle">AI智能客服</p>
+                    <p class="text-xs" data-lang-key="chatHeaderStatus">在线</p>
+                </div>
+                <button id="close-chat" class="text-2xl leading-none font-bold hover:text-gray-200 transition-colors">&times;</button>
+            </div>
+            <div id="chat-messages">
+                <!-- Messages will be appended here -->
+            </div>
+            <div id="chat-input-container">
+                <input type="text" id="chat-input" placeholder="输入您的问题...">
+                <button id="chat-send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        <div id="chat-bubble">
+            <i class="far fa-comments text-2xl"></i>
+        </div>
+    </div>
+
 
     <script>
         // 滚动显示动画的 JavaScript
@@ -360,20 +235,17 @@
             en: {
                 companyName: "Mission Achievable Tech",
                 navSolution: "Solutions",
+                navAiFeature: "AI Engine",
                 navCases: "Case Studies",
                 navPricing: "Pricing",
                 navContact: "Contact Us",
                 navContactMobile: "Contact",
-                heroTitle: "Is Your Website <span class='text-red-500'>Driving Customers Away</span>?",
+                heroTitle: "Is Your Website Driving Customers Away?",
                 heroSubtitle: "Our core goal: Make clients feel 'You're the right choice' within 30 seconds.",
                 heroButton: "Build a Website That Gets Inquiries",
                 beforeTitle: "Before",
                 afterTitle: "After",
-                beforeTag1: "Inquiries = 0?",
-                beforeTag2: "No Trust?",
-                afterTag1: "Boost Brand Image",
-                afterTag2: "300% Inquiry Growth",
-                painTitle: "Are You Facing These <span class='text-blue-600'>Problems</span>?",
+                painTitle: "Are You Facing These <span class='gradient-text'>Problems</span>?",
                 painSubtitle: "We understand you, and the unspoken pains of your customers.",
                 pain1Title: "Still using free templates?",
                 pain1Text: "Looks unprofessional, losing at the first impression.",
@@ -383,7 +255,7 @@
                 pain3Text: "Wasted money, the site is just a decoration with zero inquiries.",
                 pain4Title: "Backend too hard to use?",
                 pain4Text: "Need to ask for help every time, wasting time and money.",
-                solutionTitle: "Our <span class='text-blue-600'>Solutions</span>",
+                solutionTitle: "Our <span class='gradient-text'>Solutions</span>",
                 solutionSubtitle: "We don't just say 'we do it well', we show you 'how we excel'.",
                 solution1Title: "Custom Design, No Templates",
                 solution1What: "<strong class='text-gray-800'>What we do:</strong> 1-on-1 design based on your company culture and products. Every website is unique.",
@@ -394,6 +266,9 @@
                 solution3Title: "Visual Backend, Simple as Posting on Social Media",
                 solution3What: "<strong class='text-gray-800'>What we do:</strong> Provide a super-easy-to-use content management system.",
                 solution3Why: "<strong class='text-gray-800'>What's the benefit:</strong> You can upload new products and update info anytime, anywhere, no coding required.",
+                aiFeatureTitle: "Exclusive Feature: AI Customer Acquisition Engine",
+                aiFeatureDesc: "Your website will be integrated with the powerful SiliconFlow AI large model, featuring a 7x24 online AI chatbot. Without human intervention, it can automatically chat with visitors, answer questions, and guide them to place orders, efficiently converting traffic into inquiries!",
+                aiFeaturePrice: "Original Price <span class='line-through'>¥4900</span> <span class='ml-4 bg-yellow-400 text-indigo-900 font-bold py-2 px-3 rounded'>FREE During Promotion</span>",
                 casesTitle: "Proof is in the Pudding",
                 casesSubtitle: "The most crucial step to build trust. See the changes we've brought them.",
                 case1Client: "Komais Machinery Co., Ltd.",
@@ -409,15 +284,15 @@
                 pricingTitle: "Service Plans & Pricing",
                 pricingSubtitle: "Transparent and clear. We give you choices, not riddles.",
                 plan1Name: "Basic Plan",
-                plan1Desc: "For startups",
-                plan1Price: "¥ 5,880",
+                plan1Desc: "Best Value!",
+                plan1Badge: "Best Value",
+                plan1Price: "¥ 499",
                 plan2Name: "Standard Plan",
-                plan2Desc: "Best Value!",
-                plan2Badge: "Best Value",
-                plan2Price: "¥ 9,880",
+                plan2Desc: "For growing businesses",
+                plan2Price: "¥ 599",
                 plan3Name: "Premium Plan",
-                plan3Desc: "For growing businesses",
-                plan3Price: "¥ 15,800",
+                plan3Desc: "For scaling enterprises",
+                plan3Price: "¥ 2,999",
                 planFeature1: "Professional Custom Design",
                 planFeature2: "5-10 Pages",
                 planFeature3: "Mobile Responsive",
@@ -444,27 +319,28 @@
                 ctaSubtitle: "Give us a chance, and we'll give you a website that consistently brings in customers.",
                 ctaButton: "Message Us Now for a Free Custom Proposal!",
                 footerText: "© 2024 Mission Achievable Network Technology Co., Ltd. All Rights Reserved.",
-                footerSubtitle: "Professional Foreign Trade Website Service Provider",
+                footerSubtitle: "Professional AI Foreign Trade Website Service Provider",
                 langButton: "中文",
                 alertMsg: "Please contact us via Douyin private message or the inquiry button!",
+                chatHeaderTitle: "AI Assistant",
+                chatHeaderStatus: "Online",
+                chatInputPlaceholder: "Type your question...",
+                chatTyping: "Typing...",
             },
             zh: {
                 companyName: "使命必达网络科技",
                 navSolution: "解决方案",
+                navAiFeature: "AI获客",
                 navCases: "成功案例",
                 navPricing: "服务套餐",
                 navContact: "立即咨询",
                 navContactMobile: "咨询",
-                heroTitle: "你的外贸官网，是不是正在帮你<span class='text-red-500'>“劝退”</span>客户？",
+                heroTitle: "你的外贸官网，是不是正在帮你“劝退”客户？",
                 heroSubtitle: "我们的核心目标：在30秒内让客户产生“找你做就对了”的感觉。",
                 heroButton: "做一个让海外客户主动发询盘的网站",
                 beforeTitle: "改造前",
                 afterTitle: "改造后",
-                beforeTag1: "询盘 = 0 ?",
-                beforeTag2: "客户不信任 ?",
-                afterTag1: "提升品牌形象",
-                afterTag2: "询盘增长300%",
-                painTitle: "你是否也遇到了这些<span class='text-blue-600'>难题</span>？",
+                painTitle: "你是否也遇到了这些<span class='gradient-text'>难题</span>？",
                 painSubtitle: "我们懂你，更懂你的客户说不出的苦。",
                 pain1Title: "还在用免费模板？",
                 pain1Text: "看起来不专业，在客户那里第一印象就输了。",
@@ -474,7 +350,7 @@
                 pain3Text: "钱白花了，网站成了摆设，一个询盘电话都没有。",
                 pain4Title: "后台难用到抓狂？",
                 pain4Text: "想自己更新产品，每次都要求人，既费时间又费钱。",
-                solutionTitle: "我们的<span class='text-blue-600'>解决方案</span>",
+                solutionTitle: "我们的<span class='gradient-text'>解决方案</span>",
                 solutionSubtitle: "我们不只说“做得好”，更要让你清楚“我们好在哪里”。",
                 solution1Title: "专业定制设计，拒绝模板",
                 solution1What: "<strong class='text-gray-800'>做什么：</strong>根据你的公司文化、产品特色，1对1进行设计，每一个网站都是独一无二的。",
@@ -485,6 +361,9 @@
                 solution3Title: "可视化后台，像发朋友圈一样简单",
                 solution3What: "<strong class='text-gray-800'>做什么：</strong>提供一个操作非常简单的后台管理系统。",
                 solution3Why: "<strong class='text-gray-800'>有什么用：</strong>你自己就能随时随地上传新产品、修改公司介绍，完全不需要懂代码，省时省心。",
+                aiFeatureTitle: "独家特色功能：AI大模型获客引擎",
+                aiFeatureDesc: "您的网站将融入强大的SiliconFlow AI大模型，拥有一个7x24小时在线的AI智能客服。无需真人值守，它能自动与访客聊天，解答疑问，并引导他们下单，将流量高效转化为询盘！",
+                aiFeaturePrice: "原价 <span class='line-through'>¥4900</span> <span class='ml-4 bg-yellow-400 text-indigo-900 font-bold py-2 px-3 rounded'>活动期间免费赠送</span>",
                 casesTitle: "事实胜于雄辩",
                 casesSubtitle: "建立信任最关键的一环，看看我们为他们带来了什么改变。",
                 case1Client: "科迈斯工程机械 (Komais Machinery Co., Ltd.)",
@@ -500,15 +379,15 @@
                 pricingTitle: "服务套餐与价格",
                 pricingSubtitle: "清晰透明，总有一款适合你。我们让您做的，是选择题，不是猜谜题。",
                 plan1Name: "基础版",
-                plan1Desc: "适合初创企业",
-                plan1Price: "¥ 5,880",
+                plan1Desc: "主推！",
+                plan1Badge: "性价比之选",
+                plan1Price: "¥ 499",
                 plan2Name: "标准版",
-                plan2Desc: "主推！",
-                plan2Badge: "性价比之选",
-                plan2Price: "¥ 9,880",
+                plan2Desc: "适合成长型业务",
+                plan2Price: "¥ 599",
                 plan3Name: "尊享版",
                 plan3Desc: "适合有发展规划的企业",
-                plan3Price: "¥ 15,800",
+                plan3Price: "¥ 2999",
                 planFeature1: "专业定制设计",
                 planFeature2: "5-10个页面",
                 planFeature3: "移动端适配",
@@ -535,9 +414,13 @@
                 ctaSubtitle: "给我们一个机会，我们还你一个能持续带来客户的网站。",
                 ctaButton: "立即私信，免费获取为你量身定制的建站方案！",
                 footerText: "© 2024 使命必达网络科技有限公司. All Rights Reserved.",
-                footerSubtitle: "专业外贸建站服务商",
+                footerSubtitle: "专业AI外贸建站服务商",
                 langButton: "English",
                 alertMsg: "请通过抖音私信或咨询按钮联系我们！",
+                chatHeaderTitle: "AI智能客服",
+                chatHeaderStatus: "在线",
+                chatInputPlaceholder: "输入您的问题...",
+                chatTyping: "正在输入...",
             }
         };
 
@@ -558,6 +441,8 @@
                     el.innerHTML = translations[lang][key];
                 }
             });
+            // Also update chat input placeholder
+            document.getElementById('chat-input').placeholder = translations[lang].chatInputPlaceholder;
         };
 
         langSwitcher.addEventListener('click', () => {
@@ -572,6 +457,125 @@
         // Initialize with Chinese language
         switchLanguage('zh');
     </script>
+    <script>
+        // AI Chatbot Logic
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
 
+        const API_KEY = 'sk-xifmrwnarxegowpdpwjmbpiodhjawjtacbkgtkoygpgszhec';
+        const API_URL = 'https://api.siliconflow.cn/v1/chat/completions';
+
+        let conversationHistory = [];
+
+        // Function to toggle chat window visibility
+        const toggleChatWindow = () => {
+            chatWindow.classList.toggle('hidden-chat');
+            chatBubble.classList.toggle('hidden-chat');
+            if (!chatWindow.classList.contains('hidden-chat') && conversationHistory.length === 0) {
+                 // Add a welcome message if it's the first time opening
+                addBotMessage(currentLang === 'zh' ? '您好！我是您的专属AI建站顾问，有什么可以帮助您的吗？' : 'Hello! I am your dedicated AI website consultant. How can I help you today?');
+            }
+        };
+
+        chatBubble.addEventListener('click', toggleChatWindow);
+        closeChat.addEventListener('click', toggleChatWindow);
+
+        // Function to add a message to the chat display
+        const addMessage = (sender, text) => {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'content';
+            contentDiv.textContent = text;
+            
+            messageDiv.appendChild(contentDiv);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+        };
+        
+        const addBotMessage = (text) => {
+            addMessage('bot', text);
+            conversationHistory.push({ role: 'assistant', content: text });
+        };
+
+        // Function to show typing indicator
+        const showTypingIndicator = () => {
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.className = 'chat-message bot';
+            typingDiv.innerHTML = `<div class="content">${translations[currentLang].chatTyping}</div>`;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+
+        // Function to remove typing indicator
+        const removeTypingIndicator = () => {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        };
+
+        // Function to handle sending a message
+        const handleSendMessage = async () => {
+            const userInput = chatInput.value.trim();
+            if (userInput === '') return;
+
+            addMessage('user', userInput);
+            conversationHistory.push({ role: 'user', content: userInput });
+            chatInput.value = '';
+            showTypingIndicator();
+
+            try {
+                // System prompt to guide the AI
+                const systemPrompt = {
+                    role: 'system',
+                    content: `你是“使命必达网络科技有限公司”的AI销售助理。你的任务是：1. 友好、专业地回答用户关于网站建设、SEO、设计、价格套餐（基础版499元，标准版599元，尊享版2999元）等问题。2. 了解用户的需求，比如他们做什么行业，为什么需要网站。3. 积极引导用户选择一个套餐或留下联系方式（如邮箱或电话）以便我们的专家跟进。4. 保持对话简短、热情、有帮助。最终目标是获取销售线索。`
+                };
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'authorization': `Bearer ${API_KEY}`,
+                        'content-type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-ai/DeepSeek-V2-Chat',
+                        messages: [systemPrompt, ...conversationHistory],
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+
+                const data = await response.json();
+                const botResponse = data.choices[0].message.content;
+                
+                removeTypingIndicator();
+                addBotMessage(botResponse);
+
+            } catch (error) {
+                removeTypingIndicator();
+                console.error('Error fetching AI response:', error);
+                const errorMsg = currentLang === 'zh' ? '抱歉，我暂时遇到了一些问题，请稍后再试。' : 'Sorry, I am having some trouble right now. Please try again later.';
+                addBotMessage(errorMsg);
+            }
+        };
+
+        chatSend.addEventListener('click', handleSendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSendMessage();
+            }
+        });
+
+    </script>
 </body>
 </html>
